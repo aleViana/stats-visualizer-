@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ team_name }} — World Cup Record{% endblock %}
+{% block content %}
+  <h1>{{ team_name }}</h1>
+  <dl class="stat-grid">
+    <div><dt>Titles</dt><dd>{{ stats.titles }}</dd></div>
+    <div><dt>Runner-up</dt><dd>{{ stats.runner_up }}</dd></div>
+    <div><dt>Tournaments played</dt><dd>{{ stats.tournaments_played }}</dd></div>
+    <div><dt>Matches played</dt><dd>{{ stats.played }}</dd></div>
+    <div><dt>Won</dt><dd>{{ stats.won }}</dd></div>
+    <div><dt>Drawn</dt><dd>{{ stats.drawn }}</dd></div>
+    <div><dt>Lost</dt><dd>{{ stats.lost }}</dd></div>
+    <div><dt>Goals for</dt><dd>{{ stats.goals_for }}</dd></div>
+    <div><dt>Goals against</dt><dd>{{ stats.goals_against }}</dd></div>
+    <div><dt>Goal difference</dt><dd>{{ stats.goals_for - stats.goals_against }}</dd></div>
+  </dl>
+{% endblock %}
