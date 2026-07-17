@@ -24,7 +24,7 @@ TEAM_INDEX = DATA["team_index"]
 
 @app.route("/")
 def index():
-    return render_template("index.html", tournaments=DATA["tournaments"])
+    return render_template("base.html", tournaments=DATA["tournaments"])
 
 
 @app.route("/stats")
@@ -42,9 +42,6 @@ def api_tournaments():
         {k: v for k, v in t.items() if k != "matches"} for t in DATA["tournaments"]
     ]
     return jsonify(summaries)
-
-
-
 
 
 @app.route("/api/teams")
