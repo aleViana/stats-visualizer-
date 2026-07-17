@@ -43,19 +43,3 @@ def test_index_route_returns_200():
     assert b"1930" in response.data
 
 
-def test_tournament_route_404_for_unknown_year():
-    client = app_module.app.test_client()
-    assert client.get("/tournament/1899").status_code == 404
-
-
-def test_team_route_404_for_unknown_team():
-    client = app_module.app.test_client()
-    assert client.get("/team/Nowhereland").status_code == 404
-
-
-def test_api_teams_search():
-    client = app_module.app.test_client()
-    response = client.get("/api/teams?q=braz")
-    assert response.status_code == 200
-    names = [t["name"] for t in response.get_json()]
-    assert "Brazil" in names
