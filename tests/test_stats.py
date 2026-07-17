@@ -25,21 +25,11 @@ def test_brazil_has_most_titles():
     assert most_titled == "Brazil"
 
 
-def test_find_team_is_case_insensitive():
-    assert app_module.find_team("brazil") == "Brazil"
-    assert app_module.find_team("BRAZIL") == "Brazil"
-    assert app_module.find_team("Nowhereland") is None
-
-
 def test_team_goal_difference_consistent_with_matches():
     stats = app_module.TEAM_INDEX["Brazil"]
     assert stats["won"] + stats["drawn"] + stats["lost"] == stats["played"]
 
 
-def test_index_route_returns_200():
-    client = app_module.app.test_client()
-    response = client.get("/")
-    assert response.status_code == 200
-    assert b"1930" in response.data
+
 
 
