@@ -103,6 +103,10 @@ tbody tr:hover { background: var(--row-hover); }
 
 .score { text-align: center; font-variant-numeric: tabular-nums; }
 
+.h2h-table th, .h2h-table td { text-align: center; }
+.h2h-table th:first-child, .h2h-table td:first-child { text-align: left; }
+.h2h-table .diagonal, .h2h-table .muted { color: var(--muted); }
+
 .podium {
   list-style: none;
   padding: 0;

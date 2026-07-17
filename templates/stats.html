@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Head-to-Head — World Cup Winners{% endblock %}
+{% block content %}
+  <h1>Head-to-Head: World Cup Winning Nations</h1>
+  <p>Win percentage for the row team against the column team, across all FIFA World Cup matches (West Germany counted as Germany).</p>
+  <table class="h2h-table">
+    <thead>
+      <tr>
+        <th></th>
+        {% for opponent in teams %}
+        <th><a href="{{ url_for('team_detail', name=opponent) }}">{{ opponent }}</a></th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for team in teams %}
+      <tr>
+        <th><a href="{{ url_for('team_detail', name=team) }}">{{ team }}</a></th>
+        {% for opponent in teams %}
+          {% if team == opponent %}
+            <td class="score diagonal">—</td>
+          {% else %}
+            {% set cell = table[team][opponent] %}
+            {% if cell.played == 0 %}
+              <td class="score muted">n/a</td>
+            {% else %}
+              <td class="score" title="{{ cell.won }}W {{ cell.drawn }}D {{ cell.lost }}L in {{ cell.played }} matches">{{ cell.win_pct }}%</td>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Final Table: Record vs. Other World Cup Winners</h2>
+  <table class="summary-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Team</th>
+        <th>P</th>
+        <th>W</th>
+        <th>D</th>
+        <th>L</th>
+        <th>Win%</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in summary %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td><a href="{{ url_for('team_detail', name=row.team) }}">{{ row.team }}</a></td>
+        <td class="score">{{ row.played }}</td>
+        <td class="score">{{ row.won }}</td>
+        <td class="score">{{ row.drawn }}</td>
+        <td class="score">{{ row.lost }}</td>
+        <td class="score">{{ row.win_pct if row.win_pct is not none else "n/a" }}{{ "%" if row.win_pct is not none }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

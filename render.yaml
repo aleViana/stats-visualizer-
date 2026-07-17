@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: wc-stats
+    runtime: docker
+    dockerfilePath: ./dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /
+    autoDeployTrigger: checksPass

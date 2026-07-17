@@ -5,6 +5,8 @@ from pathlib import Path
 
 from flask import Flask, abort, jsonify, render_template, request
 
+from data.head_to_head import WINNERS, compute_head_to_head, compute_summary
+
 DATA_PATH = Path(__file__).parent / "data" / "wc_data.json"
 
 app = Flask(__name__)
@@ -39,6 +41,14 @@ def tournament_detail(year: int):
     if tournament is None:
         abort(404)
     return render_template("tournament.html", tournament=tournament)
+
+
+@app.route("/stats")
+def stats():
+    matches = [m for t in DATA["tournaments"] for m in t["matches"]]
+    table = compute_head_to_head(matches, WINNERS)
+    summary = compute_summary(table)
+    return render_template("stats.html", teams=WINNERS, table=table, summary=summary)
 
 
 @app.route("/team/<name>")
