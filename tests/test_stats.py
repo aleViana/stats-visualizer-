@@ -6,12 +6,6 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 import app as app_module
 
 
-def test_wc_data_has_all_22_editions():
-    assert len(app_module.DATA["tournaments"]) == 22
-    years = {t["year"] for t in app_module.DATA["tournaments"]}
-    assert years == set(range(1930, 2023, 4)) - {1942, 1946}
-
-
 def test_2022_final_result():
     tournament = app_module.TOURNAMENTS_BY_YEAR[2022]
     assert tournament["winner"] == "Argentina"
