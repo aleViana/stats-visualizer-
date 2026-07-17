@@ -44,12 +44,7 @@ def api_tournaments():
     return jsonify(summaries)
 
 
-@app.route("/api/tournaments/<int:year>")
-def api_tournament_detail(year: int):
-    tournament = TOURNAMENTS_BY_YEAR.get(year)
-    if tournament is None:
-        return jsonify({"error": "not found"}), 404
-    return jsonify(tournament)
+
 
 
 @app.route("/api/teams")
@@ -60,12 +55,7 @@ def api_teams():
     return jsonify([{"name": name, **TEAM_INDEX[name]} for name in names])
 
 
-@app.route("/api/teams/<name>")
-def api_team_detail(name: str):
-    canonical = find_team(name)
-    if canonical is None:
-        return jsonify({"error": "not found"}), 404
-    return jsonify({"name": canonical, **TEAM_INDEX[canonical]})
+
 
 
 if __name__ == "__main__":
