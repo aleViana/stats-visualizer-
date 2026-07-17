@@ -23,11 +23,6 @@ TEAM_INDEX = DATA["team_index"]
 
 
 @app.route("/")
-def index():
-    return render_template("base.html", tournaments=DATA["tournaments"])
-
-
-@app.route("/stats")
 def stats():
     matches = [m for t in DATA["tournaments"] for m in t["matches"]]
     table = compute_head_to_head(matches, WINNERS)
