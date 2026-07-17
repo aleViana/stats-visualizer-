@@ -21,26 +21,10 @@ TOURNAMENTS_BY_YEAR = {t["year"]: t for t in DATA["tournaments"]}
 TEAM_INDEX = DATA["team_index"]
 
 
-def find_team(name: str) -> str | None:
-    """Case-insensitive lookup, returns the canonical team name or None."""
-    lower = name.lower()
-    for team_name in TEAM_INDEX:
-        if team_name.lower() == lower:
-            return team_name
-    return None
-
 
 @app.route("/")
 def index():
     return render_template("index.html", tournaments=DATA["tournaments"])
-
-
-@app.route("/tournament/<int:year>")
-def tournament_detail(year: int):
-    tournament = TOURNAMENTS_BY_YEAR.get(year)
-    if tournament is None:
-        abort(404)
-    return render_template("tournament.html", tournament=tournament)
 
 
 @app.route("/stats")
@@ -50,15 +34,6 @@ def stats():
     summary = compute_summary(table)
     return render_template("stats.html", teams=WINNERS, table=table, summary=summary)
 
-
-@app.route("/team/<name>")
-def team_detail(name: str):
-    canonical = find_team(name)
-    if canonical is None:
-        abort(404)
-    return render_template(
-        "team.html", team_name=canonical, stats=TEAM_INDEX[canonical]
-    )
 
 
 @app.route("/api/tournaments")
