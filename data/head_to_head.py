@@ -25,11 +25,11 @@ WINNERS = [
     "Spain",
 ]
 
-
+# Returns the canonical name for a team, handling aliases.
 def _canonical(name: str) -> str:
     return NAME_ALIASES.get(name, name)
 
-
+#Loads the matches from JSON file
 def load_matches() -> list[dict]:
     data = json.loads(DATA_PATH.read_text())
     matches = []
@@ -37,7 +37,7 @@ def load_matches() -> list[dict]:
         matches.extend(tournament["matches"])
     return matches
 
-
+#Find matches between the teams and compute the head-to-head statistics 
 def compute_head_to_head(
     matches: list[dict], teams: list[str] = WINNERS
 ) -> dict[str, dict[str, dict]]:
@@ -67,13 +67,14 @@ def compute_head_to_head(
                 cell["won"] += 1
             elif gf < ga:
                 cell["lost"] += 1
+
             else:
                 cell["drawn"] += 1
 
     for a in teams:
         for cell in table[a].values():
             cell["win_pct"] = (
-                round(100 * cell["won"] / cell["played"], 1) if cell["played"] else None
+                round(100 * (cell["won"] + cell["drawn"] * 0.5) / cell["played"], 1) if cell["played"] else None
             )
 
     return table
