@@ -26,7 +26,7 @@ RESULTS_URL = (
     "/master/results.csv"
 )
 OUTPUT_PATH = Path(__file__).parent / "wc_data.json"
-LAST_HISTORICAL_YEAR = 2022
+LAST_HISTORICAL_YEAR = 2026
 
 
 def fetch_csv_rows(url: str) -> list[dict]:
